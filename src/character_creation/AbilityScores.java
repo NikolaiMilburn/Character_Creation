@@ -18,13 +18,7 @@ import java.util.List;
  * @author Eisma
  */
 public class AbilityScores {
-    
-    private int strength;
-    private int dexterity;
-    private int constitution;
-    private int intelligence;
-    private int wisdom;
-    private int charisma;
+
     // Scores order: Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma 
     private int[] abilityScores = new int[6];
     private final String[] abilityScoreNames = new String[]{ "Strength", "Dexterity", "Constitution",
@@ -32,18 +26,34 @@ public class AbilityScores {
     
     public AbilityScores() {}
     
-    public void test() {
-        for (int i : abilityScores){
-            System.out.print(i + " ");
-        }
+    /**
+     * This method is the only interface with the AbilityScores class. It prompts
+     * the user to select a method of score generation then calls the
+     * assignAbilityScores method to have the user assign each score to it's 
+     * respected ability score.
+     */
+    public void abilityScorePrompt() {
+        System.out.println("*Please read in epic voice*");
+        System.out.println("The moon is new and the stars are bright (maybe).");
+        System.out.println("The time is right to assign your skills.");
+        System.out.println("Let the dice role!");
+        System.out.println("How would you like do roll them?");
+        System.out.println("Method 1: Sum of 3d6.");
+        System.out.println("Method 2: Sum of best 3 of 5d6.");
+        System.out.println("Method 3: Sum of best 3 of 5d6 plus 1d3.");
+        System.out.print("Choose wisely: ");
+        int choice = userInputInt();
+        assignAbilityScores(choice);
     }
+    
     
     /**
      * This method takes in generated score values and prompts user to
      * assign those values to each ability score.
      * @param scores 
      */
-    public void assignAbilityScores(ArrayList<Integer> scores) {
+    private void assignAbilityScores(int method) {
+        ArrayList<Integer> scores = generateAbilityScores(1);
         while (!scores.isEmpty()) {
             for (int i = 0; i < abilityScores.length; i++) {
                 System.out.println("Generated ability score values: ");
@@ -62,6 +72,16 @@ public class AbilityScores {
         }    
     }
     
+    /**
+     * This method generates the ability score values for the user to assign based
+     * one one of three methods. The user chooses the method.
+     * Method 1: Sum of 3d6 (some of three randomly generated numbers from in range 
+     * 1-6 (inclusive).
+     * Method 2: Sum of best 3 of 5d6.
+     * Method 3: Sum of best 3 of 5d6 plus 1d3.
+     * @param method 
+     * @return ArrayList<Integer> List of generated scores.
+     */
     private ArrayList<Integer> generateAbilityScores(int method){
         Random rand = new Random();
         int sum = 0;
@@ -90,6 +110,12 @@ public class AbilityScores {
         return values;
     }
     
+    /**
+     * Utility method that rolls a n-sided die x times.
+     * @param numberOfRolls Number of dice rolls.
+     * @param diceSides Number of sides on dice (range from 1-n)
+     * @return int[] Array containing each dice roll.
+     */
     private int[] diceRoller(int numberOfRolls, int diceSides) {
         Random rand = new Random();
         int[] rolls = new int[numberOfRolls];
@@ -99,6 +125,12 @@ public class AbilityScores {
         return rolls;
     }
     
+    /**
+     * Utility method that returns the n greatest values from a given array.
+     * @param nums Array of integers
+     * @param choose Number of values (n) to select from array.
+     * @return int[] Array containing n greatest values.
+     */
     private int[] bestOf(int[] nums, int choose){
         int[] best = new int[choose];
         int max = 0;
