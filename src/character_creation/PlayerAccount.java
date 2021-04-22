@@ -5,6 +5,7 @@
  */
 package character_creation;
 
+import java.util.ArrayList;
 /**
  *
  * @author Eisma
@@ -13,6 +14,7 @@ public class PlayerAccount {
     private String userName;
     private String password;
     private String email;
+    private ArrayList<Character> characters = new ArrayList<>();
     
     public PlayerAccount(String userName, String password, String email) {
         this.userName = userName;
@@ -33,5 +35,9 @@ public class PlayerAccount {
             return true;
         else
             return false;
+    }
+    
+    public void addCharacter(Character character) {
+        characters.add(character);
     }
 }
