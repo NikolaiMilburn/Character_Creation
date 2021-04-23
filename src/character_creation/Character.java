@@ -8,25 +8,31 @@ package character_creation;
 import java.util.Random;
 import java.util.stream.*;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Arrays;
 /**
  *
  * @author Eisma
  */
 public class Character {
+    
     private String name;
     private String alignment;
+    private String[] alignments = new String[] { "Lawful Good", "Lawful Evil",
+        "Neutral Good", "Neutral Evil", "Chaotic Good", "Chaotic Evil" };
     
     // 1 = human, 2 = elf, 3 = dwarf, 4 = gnome, 5 = halfling
     private int race;
+    private final String[] races = new String[]{ "human", "elf", "dwarf", "gnome", "halfling" };
     
     // 0 = female, 1 = male
     private int gender;
+    private final String[] genders = new String[] { "female", "male" };
+    
     private int age;
     private int height;
     private int weight;
-    
-    // Strength, Dexterity, Constitution, Intelligence, Wisdom, Charisma 
-    private int[] abilityScores = new int[] {0, 0, 0, 0, 0, 0};
+    private AbilityScores abilityScores;
     
     public Character(){
         name = null;
@@ -36,6 +42,33 @@ public class Character {
         age = 0;
         height = 0;
         weight = 0;
+        abilityScores = new AbilityScores();
+    }
+    
+    public void buildCharacter() {
+        System.out.println("*Please read in epic voice*");
+        System.out.println("The moon is new and the stars are bright (maybe).");
+        System.out.println("It is a strange time to be on the road weary traveler.");
+        System.out.print("What is your name: ");
+        name = userInputString();
+        System.out.println("What an unusual name.");
+        
+        System.out.println("How do you align yourself: ");
+        System.out.println(Arrays.toString(alignments));
+        setAlignment(userInputString());
+        
+        System.out.println("I am but an old blind man. Tell me more about yourself.");
+        System.out.println("Your gender: ");
+        setGender(userInputString()); 
+        
+        System.out.println("How are your skills: ");
+        abilityScores.abilityScorePrompt();
+        
+        System.out.println(Arrays.toString(races));
+        System.out.println("What is your race: ");
+        setRace(userInputString());
+        
+
     }
     
     public String getName(){
@@ -51,16 +84,23 @@ public class Character {
     }
     
     public void setAlignment(String alignment){
-        this.alignment = alignment;
+        if (UserInput.isValid(alignment, alignments)) {
+            this.alignment = alignment;
+        }
     }
     
     public int getRace(){
         return race;
     }
     
-    public void setRace(int race){
-        this.race = race;
+    public void setRace(String race){
+        if (UserInput.isValid(race, races)) {
+            this.race = race.indexOf(race) + 1;
+        }
         raceUtil();
+        setAge();
+        setWeight();
+        setHeight();
     }
     
     public int getGender(){
@@ -69,6 +109,12 @@ public class Character {
     
     public void setGender(int gender){
         this.gender = gender;
+    }
+    
+    public void setGender(String gender) {
+        if (UserInput.isValid(gender, genders)) {
+            this.gender = gender.equals("female") ? 0 : 1;
+        }
     }
     
     public int getAge(){
@@ -100,8 +146,10 @@ public class Character {
         return height;
     }
     
-    public void setHeight(int height){
-        this.height = height;
+    // to do - finish implement
+    public void setHeight(){
+        Random rand = new Random();
+        height = rand.nextInt(99) + 1;
     }
     
     public int getWeight(){
@@ -149,31 +197,44 @@ public class Character {
             }
         }
     }
-    
-    
-    
+      
     private void raceUtil() {
         switch (race) {
             case 2:
-                abilityScores[1] += 2;
-                abilityScores[3] += 2;
-                abilityScores[2] -= 2;
+                abilityScores.setDexterity(abilityScores.getDexterity() + 2);
+                abilityScores.setIntelligence(abilityScores.getIntelligence() + 2);
+                abilityScores.setConstitution(abilityScores.getIntelligence() - 2);
                 break;
             case 3:
-                abilityScores[0] += 2;
-                abilityScores[2] += 2;
-                abilityScores[5] -= 2;
+                abilityScores.setStrength(abilityScores.getStrength() + 2);
+                abilityScores.setConstitution(abilityScores.getIntelligence() + 2);
+                abilityScores.setCharisma(abilityScores.getCharisma() - 2);
                 break;
             case 4:
-                abilityScores[1] += 2;
-                abilityScores[2] += 2;
-                abilityScores[0] -= 2;
+                abilityScores.setDexterity(abilityScores.getDexterity() + 2);
+                abilityScores.setConstitution(abilityScores.getConstitution() + 2);
+                abilityScores.setStrength(abilityScores.getStrength() - 2);
                 break;
             case 5:
-                abilityScores[1] += 2;
-                abilityScores[4] += 2;
-                abilityScores[0] -= 2;
+                abilityScores.setDexterity(abilityScores.getDexterity() + 2);
+                abilityScores.setWisdom(abilityScores.getWisdom() + 2);
+                abilityScores.setStrength(abilityScores.getStrength() - 2);
                 break;
         }
+    }
+    
+    private String userInputString() {
+        Scanner scan = new Scanner(System.in);
+        boolean isString = false;
+        while (!isString) {
+            if (scan.hasNext()) {
+                return scan.next();
+            }
+            else {
+                System.out.println("Do you think me a fool? Choose again.");
+            }
+        }
+        scan.close();
+        return "An Unnamed Traveler";
     }
 }

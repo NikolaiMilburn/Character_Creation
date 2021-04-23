@@ -33,8 +33,6 @@ public class AbilityScores {
      * respected ability score.
      */
     public void abilityScorePrompt() {
-        System.out.println("*Please read in epic voice*");
-        System.out.println("The moon is new and the stars are bright (maybe).");
         System.out.println("The time is right to assign your skills.");
         System.out.println("Let the dice role!");
         System.out.println("How would you like do roll them?");
@@ -46,6 +44,101 @@ public class AbilityScores {
         assignAbilityScores(choice);
     }
     
+    /**
+     * Returns strength score.
+     * @return 
+     */
+    public int getStrength(){
+        return abilityScores[0];
+    }
+    
+        /**
+     * Returns dexterity score.
+     * @return 
+     */
+    public int getDexterity() {
+        return abilityScores[1];
+    }
+    
+        /**
+     * Returns constitution score.
+     * @return 
+     */
+    public int getConstitution(){
+        return abilityScores[2];
+    }
+    
+        /**
+     * Returns intelligence score.
+     * @return
+     */
+    public int getIntelligence() {
+        return abilityScores[3];
+    }
+    
+        /**
+     * Returns wisdom score.
+     * @return
+     */
+    public int getWisdom(){
+        return abilityScores[4];
+    }
+    
+        /**
+     * Returns charisma score.
+     * @return
+     */
+    public int getCharisma() {
+        return abilityScores[5];
+    }
+    
+    /**
+     * Sets the strength score
+     * @param score 
+     */
+    public void setStrength(int score) {
+        abilityScores[0] = score;
+    }
+    
+    /**
+     * Sets the dexterity score
+     * @param score 
+     */
+    public void setDexterity(int score) {
+        abilityScores[1] = score;
+    }
+    
+    /**
+     * Sets the constitution score
+     * @param score 
+     */
+    public void setConstitution(int score) {
+        abilityScores[2] = score;
+    }
+    
+    /**
+     * Sets the intelligence score
+     * @param score 
+     */
+    public void setIntelligence(int score) {
+        abilityScores[3] = score;
+    }
+    
+    /**
+     * Sets the wisdom score
+     * @param score 
+     */
+    public void setWisdom(int score) {
+        abilityScores[4] = score;
+    }
+    
+    /**
+     * Sets the charisma score
+     * @param score 
+     */
+    public void setCharisma(int score) {
+        abilityScores[5] = score;
+    }
     
     /**
      * This method takes in generated score values and prompts user to

@@ -15,9 +15,9 @@ public class Character_Creation {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        AbilityScores test = new AbilityScores();
-        test.test();
-        
+            
+        Character tester = new Character();
+        tester.buildCharacter();
         
     }
     
