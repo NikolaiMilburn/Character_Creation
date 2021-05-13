@@ -16,8 +16,7 @@ public class Character_Creation {
      */
     public static void main(String[] args) {
             
-        Character tester = new Character();
-        tester.buildCharacter();
+        new GUI();
         
     }
     
